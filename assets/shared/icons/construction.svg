@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <!-- Pixel icon: Under construction: a striped traffic cone -->
+  <path fill="#2B1B4F" d="M7 1h2v1H7zM6 2h1v1H6zM9 2h1v1H9zM6 3h1v1H6zM9 3h1v1H9zM5 4h1v1H5zM10 4h1v1H10zM5 5h1v1H5zM10 5h1v1H10zM4 6h1v1H4zM11 6h1v1H11zM4 7h1v1H4zM11 7h1v1H11zM3 8h1v1H3zM12 8h1v1H12zM3 9h1v1H3zM12 9h1v1H12zM2 10h1v1H2zM13 10h1v1H13zM2 11h1v1H2zM13 11h1v1H13zM1 12h14v1H1zM0 13h1v1H0zM15 13h1v1H15zM0 14h16v1H0z"/>
+  <path fill="#F7C948" d="M7 2h2v1H7zM7 3h2v1H7zM5 6h6v1H5zM5 7h6v1H5zM3 10h10v1H3zM3 11h10v1H3z"/>
+  <path fill="#FF6FF2" d="M6 4h4v1H6zM6 5h4v1H6zM4 8h8v1H4zM4 9h8v1H4zM1 13h14v1H1z"/>
+</svg>

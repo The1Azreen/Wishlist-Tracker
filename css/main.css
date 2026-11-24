@@ -1,0 +1,479 @@
+/* Updated the layout to match the format of the reference project */
+
+@font-face {
+  font-family: "Determination";
+  src: url(../assets/shared/fonts/determination.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "pixelmplus12";
+  src: url(../assets/shared/fonts/pixelmplus12-regular-webfont.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "pixelmplus12";
+  src: url(../assets/shared/fonts/pixelmplus12-bold-webfont.woff) format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+html {
+  font-family: "Pixelated MS Sans Serif";
+}
+
+/* Global font overrides: force pixelmplus12 everywhere */
+html, body, button, input, textarea, select {
+  font-family: "pixelmplus12", sans-serif;
+}
+
+/* Window titles use bold weight of the same family */
+.window .title {
+  font-family: "pixelmplus12", sans-serif;
+  font-weight: 700;
+}
+
+/* App labels/icons text */
+.app {
+  font-family: "pixelmplus12", sans-serif;
+}
+
+/* Player titles */
+#player-title, #player-subtitle {
+  font-family: "pixelmplus12", sans-serif;
+  font-weight: 700;
+}
+
+header {
+  margin-top: 32px;
+  margin-bottom: 16px;
+  display: flex;
+}
+
+main {
+  height: fit-content;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+p {
+  margin: 10px 0;
+}
+
+.middle {
+  border: none;
+  height: 100%;
+  width: 50%;
+  padding-bottom: 20px;
+}
+
+.left, .right {
+  width: 25%;
+  padding: 20px;
+}
+
+.sidebar {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+
+.center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grow {
+  flex: 1;
+}
+
+section {
+  margin-bottom: 20px;
+}
+
+#header-name {
+  max-width: 400px;
+  max-height: 150px;
+  height: auto;
+}
+
+#opening {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 16px;
+  width: 50%;
+}
+
+#webcam {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  width: 100%;
+}
+
+#pfp {
+  float: right;
+  margin: 4px;
+  border: 2px solid var(--lilith-border-color);
+}
+
+#desktop-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.desktop {
+  position: absolute;
+  margin: 32px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.app {
+  text-align: center;
+  white-space: nowrap;
+  font-size: 16px;
+  text-decoration: none;
+  color: #222;
+  font-family: 'PixelMplus12 Regular', sans-serif;
+  width: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app > img {
+  display: block;
+}
+
+.window {
+  position: relative;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px #000;
+  background: #fff;
+  border-radius: 4px;
+  margin: 0 auto 20px auto;
+  width: 100%;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.window .title {
+  border-bottom: 2px solid #000;
+  background: #007acc;
+  color: #fff;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'PixelMplus12 Bold', sans-serif;
+}
+
+.window .content {
+  background: #fdfdfd;
+  color: #222;
+  padding: 10px;
+}
+
+#player-play-region {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+#music-link {
+  position: relative;
+  top: -22px;
+  float: left;
+}
+
+#music-dance {
+  position: relative;
+  top: -50px;
+  float: right;
+}
+
+#player-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  font-family: "Determination";
+}
+
+#player-subtitle {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  font-family: "Determination";
+}
+
+#player {
+  display: none;
+}
+
+#player-title-region, #player-play-region {
+  margin: 8px;
+}
+
+#music-prev, #music-toggle, #music-next, a {
+  cursor: url("../assets/shared/click.png"), auto;
+}
+
+#achievement-title::after {
+  content: ""; 
+}
+
+body {
+  /* Scrolling night sky drawn in CSS (same as the sitemap and Game//State): five tiled layers of
+     star dots over an indigo fade. Old wallpapers: assets/shared/nightsky.gif, and before that
+     background: linear-gradient(rgb(251,220,220,.15),rgb(251,220,220,.15)),url('../assets/unused/wallpaper.png'); */
+  background-color: #0d0820;
+  background-image:
+    radial-gradient(circle at 23px 41px, #fff 1px, transparent 1.6px),
+    radial-gradient(circle at 131px 87px, #F7C948 1px, transparent 1.6px),
+    radial-gradient(circle at 77px 163px, #6DE0F6 1px, transparent 1.6px),
+    radial-gradient(circle at 181px 19px, #fff 1.2px, transparent 1.8px),
+    radial-gradient(circle at 41px 121px, #FF6FF2 0.8px, transparent 1.4px),
+    linear-gradient(180deg, #0d0820 0%, #1d1240 70%, #2B1B4F 100%);
+  background-size: 211px 197px, 263px 229px, 241px 251px, 307px 283px, 173px 191px, 100% 100%;
+  background-attachment: fixed;
+  animation: bg-scroll 40s linear infinite;
+  cursor: url('../assets/shared/cursor.png'), auto;
+}
+
+/* Each layer moves down by a whole number of its own tiles, so the loop is seamless and the
+   layers drift at different speeds. */
+@keyframes bg-scroll {
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+  to   { background-position: 0 197px, 0 229px, 0 502px, 0 283px, 0 382px, 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: calc(100% - 8px);
+  height: 32px;
+  background-color: var(--lilith-task-color);
+  padding: 4px;
+  border-top: 2px solid;
+  border-color: white;
+  display: inline;
+}
+
+#taskbar {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.vl {
+  width: 2px;
+  height: 30px;
+  border: 2px solid var(--lilith-border-color);
+  border-top: 0;
+  border-left: 0;
+  background: whitesmoke;
+}
+
+.banners {
+  flex: 1;
+  min-width: 0;
+}
+
+.site-date {
+  border: 2px solid;
+  border-color: var(--lilith-border-color) whitesmoke whitesmoke var(--lilith-border-color);
+  padding: 2px;
+}
+
+#updates {
+  overflow-y: auto;
+  max-height: 240px;
+  scrollbar-color: var(--lilith-scrollbar-inner-color) var(--lilith-scrollbar-outer-color);
+  scrollbar-width: thin;
+}
+
+#updates::-webkit-scrollbar {
+  width: 8px;
+}
+
+#updates::-webkit-scrollbar-track {
+  background: #C5EAFC; 
+}
+
+#updates::-webkit-scrollbar-thumb {
+  background: #DB8ED6; 
+}
+
+#updates::-webkit-scrollbar-thumb:hover {
+  background: #B471B0; 
+}
+
+#webring {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+#home-content {
+  display: flex;
+  gap: 8px;
+}
+
+#updates > ul > li {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.pixelmplus12 {
+  font-family: "pixelmplus12", sans-serif;
+}
+
+@media (max-width: 1250px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .desktop {
+    position: initial;
+    margin: 0;
+  }
+  
+  #desktop-container {
+    position: initial;
+    width: initial;
+  }
+
+  #home-content {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+@media (max-width: 960px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Stacked columns follow source order, which put the home page's left column (Bio, Contact...)
+     above Navigation. Lift the middle column so Navigation sits right under the header. */
+  .middle {
+    width:95%;
+    order: -1;
+  }
+  
+  .left, .right {
+    width:75%;
+  }
+  
+  #desktop-container {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .desktop {
+    justify-content: flex-start !important;  
+  }
+
+  #home-content {
+    flex-direction: row;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 550px) {
+  #home-content {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+/* 88x31 pixel buttons (assets/shared/buttons/): "Other sites" on the home page and the taskbar */
+.px-button {
+  width: 88px;
+  height: 31px;
+  image-rendering: pixelated;
+  vertical-align: middle;
+}
+#buttons-misc .px-button { margin-right: 4px; }
+#buttons-misc { line-height: 31px; }
+
+/* Scrolling banner (replaces the old <marquee> tag): the track starts just past the right edge and
+   slides left until it has fully left the box, then starts over. It moves with transform, so the
+   GPU does it without the page being laid out again every frame. --marquee-time sets the speed. */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  contain: inline-size; /* the long track must not widen the box (e.g. the taskbar) */
+}
+.marquee-track {
+  display: inline-block;
+  padding-left: 100%;
+  will-change: transform;
+  animation: marquee var(--marquee-time, 16s) linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { padding-left: 0; animation: none; }
+}
+
+/* "Work in progress" notice (pages/shrine.html, pages/memories.html): hazard-striped frame with a
+   bobbing pixel traffic cone (assets/shared/icons/construction.svg). */
+.wip-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 6px 10px;
+  border: 6px solid;
+  border-image: repeating-linear-gradient(-45deg, #F7C948 0 6px, #2B1B4F 6px 12px) 6;
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--lilith-window-text-color);
+  font-weight: bold;
+  line-height: 1.3;
+}
+.wip-note img {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  animation: wip-bob 1.2s steps(2) infinite;
+}
+.wip-note strong {
+  color: var(--lilith-username-color);
+}
+@keyframes wip-bob {
+  50% { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wip-note img { animation: none; }
+}

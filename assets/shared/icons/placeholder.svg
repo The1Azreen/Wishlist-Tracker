@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <!-- Placeholder sitemap icon: replace with a real 16x16 icon -->
+  <rect x="0" y="0" width="16" height="16" fill="#3C2E7B"/>
+  <rect x="1" y="1" width="14" height="14" fill="#6DE0F6"/>
+  <path fill="#2B1B4F" d="M5 4h6v1h1v3h-1v1H9v2H7V8h1V7h2V5H6v1H5zM7 12h2v2H7z"/>
+</svg>

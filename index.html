@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wishlist - Azreen's Site</title>
+  <meta name="description" content="The1Azreen's collection wishlist: games, figures, Blu-rays, CDs, vinyl, books and hardware I'm hunting for.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/shared/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/shared/favicon-32.png" type="image/png" sizes="32x32">
+  <!-- The site's own theme files (copied from Azreen-Website), then this app's additions. -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/needy.css">
+  <link rel="stylesheet" href="css/logo.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header>
+    <div class="center">
+      <a id="logo-link" href="https://the1azreen.neocities.org/" style="position:relative;">
+        <span id="header-name" class="site-logo" role="img" aria-label="The1Azreen"><span class="site-logo-ink"></span></span>
+        <img class="dancer" src="assets/shared/dance_mid.gif" alt="">
+      </a>
+    </div>
+    <div id="desktop-container">
+      <div class="desktop">
+        <a class="app" id="app-site" href="https://the1azreen.neocities.org/">
+          <span class="desk-icon" data-icon="neocities" aria-hidden="true"></span>Website
+        </a>
+      </div>
+      <div class="desktop" style="right: 0; justify-content: flex-end;">
+        <a class="app" id="app-repo" href="https://github.com/The1Azreen/Wishlist-Tracker">
+          <span class="desk-icon" data-icon="github" aria-hidden="true"></span>Github
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="layout">
+    <!-- Left column: sync, stats, series progress -->
+    <div class="left">
+      <section>
+        <div class="window">
+          <div class="title" data-ico="sync"><span>Google Drive</span></div>
+          <div class="content" id="sync-panel"></div>
+        </div>
+      </section>
+      <section>
+        <div class="window">
+          <div class="title" data-ico="stats"><span>Stats</span></div>
+          <div class="content" id="stats"></div>
+        </div>
+      </section>
+      <section>
+        <div class="window">
+          <div class="title" data-ico="series"><span>Series progress</span></div>
+          <div class="content" id="series"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Middle: toolbar and the list -->
+    <div class="middle">
+      <section>
+        <div class="window">
+          <div class="title" data-ico="wishlist"><span>Wishlist</span></div>
+          <div class="content toolbar">
+            <div class="toolbar-row">
+              <button class="button primary" id="add-btn" title="Add an item (N)">+ Add item</button>
+              <input type="search" id="search" placeholder="Search names, series, makers, notes… ( / )" autocomplete="off">
+            </div>
+            <div class="toolbar-row cat-tabs" id="cat-tabs" role="tablist" aria-label="Category"></div>
+            <div class="toolbar-row selects">
+              <label>Show
+                <select id="f-status">
+                  <option value="open">Still hunting</option>
+                  <option value="all">Everything</option>
+                </select>
+              </label>
+              <label>Priority
+                <select id="f-priority">
+                  <option value="">Any</option>
+                  <option>High</option><option>Medium</option><option>Low</option>
+                </select>
+              </label>
+              <label>Group by
+                <select id="group">
+                  <option value="year">Release year</option>
+                  <option value="category">Category</option>
+                  <option value="series">Series</option>
+                  <option value="status">Status</option>
+                  <option value="format">Platform / format</option>
+                  <option value="none">Nothing</option>
+                </select>
+              </label>
+              <label>Sort
+                <select id="sort">
+                  <option value="priority">Priority</option>
+                  <option value="year">Release year</option>
+                  <option value="name">Name</option>
+                  <option value="added">Recently added</option>
+                  <option value="price">Target price</option>
+                </select>
+              </label>
+              <span class="view-toggle" role="group" aria-label="View">
+                <button class="button" data-view="cards" aria-pressed="true">Cards</button>
+                <button class="button" data-view="list" aria-pressed="false">List</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="groups" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <!-- Add / edit dialog -->
+  <dialog id="editor" class="window">
+    <div class="title" data-ico="edit"><span id="editor-title">Add item</span></div>
+    <form class="content" id="editor-form" method="dialog" autocomplete="off">
+      <fieldset class="cat-pick" id="cat-pick">
+        <legend>Category</legend>
+      </fieldset>
+
+      <div class="form-grid">
+        <label class="wide">Name <input name="name" required placeholder="e.g. Persona 3 FES"></label>
+        <label>Series / franchise <input name="series" list="dl-series" placeholder="e.g. Persona"></label>
+        <label><span data-label="maker">Publisher</span> <input name="maker" list="dl-maker"></label>
+        <label><span data-label="format">Platform</span> <input name="format" list="dl-format"></label>
+        <label>Edition / variant <input name="edition" list="dl-edition"></label>
+        <label data-field="region"><span data-label="region">Region</span> <input name="region" list="dl-region"></label>
+        <label>Release year <input name="release_year" type="number" min="1950" max="2100" step="1" placeholder="2006"></label>
+
+        <label>Status
+          <select name="status" id="status-select"></select>
+        </label>
+        <label>Priority
+          <select name="priority">
+            <option>High</option><option selected>Medium</option><option>Low</option>
+          </select>
+        </label>
+        <label>Condition wanted
+          <select name="condition" id="condition-select"><option value="">-</option></select>
+        </label>
+
+        <label>Target price <input name="target_price" type="number" min="0" step="0.01" inputmode="decimal"></label>
+        <label>Paid <input name="paid_price" type="number" min="0" step="0.01" inputmode="decimal"></label>
+        <label>Currency <input name="currency" list="dl-currency" maxlength="3" class="upper" placeholder="SGD"></label>
+
+        <label class="wide">Where to find it <input name="where" placeholder="Shops, sellers, events, what to watch for…"></label>
+        <label class="wide">Link <input name="link" type="url" placeholder="https://… (listing, product page)"></label>
+        <label class="wide">Image URL <input name="image" type="url" placeholder="https://… (cover or box art)"></label>
+        <div class="wide image-preview" id="image-preview" hidden><img alt=""></div>
+        <label class="wide">Notes <textarea name="notes" rows="3"></textarea></label>
+        <label>Added <input name="added" type="date"></label>
+        <label>Got it on <input name="acquired" type="date"></label>
+      </div>
+
+      <div class="dialog-actions">
+        <button type="button" class="button danger" id="delete-btn">Delete</button>
+        <span class="grow"></span>
+        <button type="button" class="button" id="cancel-btn">Cancel</button>
+        <button type="submit" class="button primary" id="save-btn">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <datalist id="dl-series"></datalist>
+  <datalist id="dl-maker"></datalist>
+  <datalist id="dl-format"></datalist>
+  <datalist id="dl-edition"></datalist>
+  <datalist id="dl-region"></datalist>
+  <datalist id="dl-currency"><option>SGD</option><option>MYR</option><option>JPY</option><option>USD</option><option>EUR</option><option>GBP</option><option>HKD</option><option>KRW</option></datalist>
+
+  <input type="file" id="import-file" accept=".json,.csv,application/json,text/csv" hidden>
+
+  <div id="toasts" aria-live="polite"></div>
+
+  <footer>
+    <div id="taskbar">
+      <span class="start">★ Wishlist</span>
+      <div class="vl"></div>
+      <span id="sync-status" class="task-status"></span>
+      <span class="grow"></span>
+      <span class="site-date" id="clock"></span>
+    </div>
+  </footer>
+</body>
+</html>

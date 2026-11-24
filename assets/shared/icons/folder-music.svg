@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <!-- Pixel folder icon with a pair of notes (Music) -->
+  <path fill="#2B1B4F" d="M1 3h5v1h1v1h8v9H1z"/>
+  <path fill="#C99A1E" d="M2 4h3v1h1v1h8v1H2z"/>
+  <path fill="#F7C948" d="M2 7h12v6H2z"/>
+  <path fill="#FFE08A" d="M2 7h12v1H2z"/>
+  <path fill="#2B1B4F" d="M6 8h6v1H6zM6 9h1v2H6zM11 9h1v2h-1z"/>
+  <path fill="#FF6FF2" d="M4 11h3v2H4zM9 11h3v2H9z"/>
+  <path fill="#F9EFF9" d="M5 11h1v1H5zM10 11h1v1h-1z"/>
+</svg>

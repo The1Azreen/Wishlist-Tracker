@@ -1,0 +1,5 @@
+# Your wishlist's automatic local copy (written by serve.py). Personal data: never commit it.
+backups/
+
+# Python
+__pycache__/

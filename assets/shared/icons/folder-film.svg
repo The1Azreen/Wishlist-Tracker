@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <!-- Pixel folder icon with a strip of film (Films & OVAs) -->
+  <path fill="#2B1B4F" d="M1 3h5v1h1v1h8v9H1z"/>
+  <path fill="#C99A1E" d="M2 4h3v1h1v1h8v1H2z"/>
+  <path fill="#F7C948" d="M2 7h12v6H2z"/>
+  <path fill="#FFE08A" d="M2 7h12v1H2z"/>
+  <path fill="#2B1B4F" d="M3 8h10v5H3z"/>
+  <path fill="#F9EFF9" d="M3 8h1v1H3zM5 8h1v1H5zM7 8h1v1H7zM9 8h1v1H9zM11 8h1v1h-1zM3 12h1v1H3zM5 12h1v1H5zM7 12h1v1H7zM9 12h1v1H9zM11 12h1v1h-1z"/>
+  <path fill="#6DE0F6" d="M4 9h3v3H4z"/>
+  <path fill="#FF6FF2" d="M8 9h4v3H8z"/>
+</svg>

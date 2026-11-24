@@ -1,0 +1,121 @@
+/* The "The1Azreen" header logo.
+   The lettering is assets/shared/The1Azreen_cropped.png used as a mask, so each theme can paint it:
+   the main site gets a Needy Girl Overdose-style candy look; shrine pages override it in their own
+   stylesheet (body.limbus .site-logo …, body.arknights .site-logo …).
+
+   <span id="header-name" class="site-logo" role="img" aria-label="The1Azreen"><span class="site-logo-ink"></span></span> */
+
+@font-face {
+  font-family: "Press Start 2P";
+  src: url(../assets/shared/fonts/PressStart2P-Regular.woff2) format("woff2");
+}
+
+.site-logo {
+  position: relative;
+  display: block;
+  width: min(360px, 78vw);
+  max-width: none;
+  max-height: none;
+  aspect-ratio: 360 / 140; /* roughly the old logo image's box, so the dancer next to it keeps her size */
+  /* outline + offset shadow are drawn around the masked lettering */
+  filter:
+    drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff)
+    drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff)
+    drop-shadow(4px 4px 0 #4932C9)
+    drop-shadow(0 0 10px rgba(255, 111, 242, 0.55));
+  animation: logo-bob 3.2s ease-in-out infinite;
+}
+.site-logo.big { width: min(560px, 90vw); }
+
+.site-logo-ink {
+  position: absolute;
+  left: 2%;
+  right: 9%;
+  top: 50%;
+  transform: translateY(-50%);
+  aspect-ratio: 1937 / 299;
+  -webkit-mask: url(../assets/shared/The1Azreen_cropped.png) center / contain no-repeat;
+  mask: url(../assets/shared/The1Azreen_cropped.png) center / contain no-repeat;
+  background:
+    linear-gradient(180deg, transparent 0 46%, rgba(255, 255, 255, 0.35) 46% 52%, transparent 52%),
+    linear-gradient(180deg, #FFE3F7 0%, #FF9BDD 40%, #FF5FC4 60%, #B48CFF 100%);
+}
+
+/* sparkles */
+.site-logo::before,
+.site-logo::after {
+  position: absolute;
+  font-family: "Press Start 2P", monospace;
+  line-height: 1;
+  pointer-events: none;
+  animation: logo-twinkle 1.6s steps(2, jump-none) infinite;
+}
+.site-logo::before {
+  content: "✦";
+  left: -4%;
+  top: 14%;
+  font-size: 22px;
+  color: #6DE0F6;
+}
+.site-logo::after {
+  content: "♡";
+  left: 46%;
+  bottom: 4%;
+  font-size: 16px;
+  color: #FF6FF2;
+  animation-delay: 0.8s;
+}
+
+@keyframes logo-bob {
+  50% { transform: translateY(-3px) rotate(-0.6deg); }
+}
+@keyframes logo-twinkle {
+  50% { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-logo, .site-logo::before, .site-logo::after { animation: none; }
+}
+
+/* ---- Desktop icons in the header (Trashbin, YouTube, Neocities, LinkedIn, GitHub) ----
+   <span class="desk-icon" data-icon="trash"> is painted from --desk-<name>; shrine stylesheets swap
+   in their own set (assets/shared/desktop/<theme>/), everything else uses the main set (desktop/main/). */
+:root {
+  --desk-trash: url(../assets/shared/desktop/main/trash.svg);
+  --desk-youtube: url(../assets/shared/desktop/main/youtube.svg);
+  --desk-neocities: url(../assets/shared/desktop/main/neocities.svg);
+  --desk-linkedin: url(../assets/shared/desktop/main/linkedin.svg);
+  --desk-github: url(../assets/shared/desktop/main/github.svg);
+  /* label colour + its 1px outline, so it reads on any background */
+  --desk-label: #F9EFF9;
+  --desk-outline: #2B1B4F;
+}
+.desk-icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 2px;
+  background: var(--desk-img) center / contain no-repeat;
+  image-rendering: pixelated;
+  transition: transform 0.12s;
+}
+.desk-icon[data-icon="trash"] { --desk-img: var(--desk-trash); }
+.desk-icon[data-icon="youtube"] { --desk-img: var(--desk-youtube); }
+.desk-icon[data-icon="neocities"] { --desk-img: var(--desk-neocities); }
+.desk-icon[data-icon="linkedin"] { --desk-img: var(--desk-linkedin); }
+.desk-icon[data-icon="github"] { --desk-img: var(--desk-github); }
+.app:hover .desk-icon,
+.app:focus-visible .desk-icon { transform: translateY(-3px); }
+
+body .app {
+  color: var(--desk-label);
+  text-shadow:
+    1px 0 0 var(--desk-outline), -1px 0 0 var(--desk-outline),
+    0 1px 0 var(--desk-outline), 0 -1px 0 var(--desk-outline),
+    1px 1px 0 var(--desk-outline), -1px -1px 0 var(--desk-outline),
+    1px -1px 0 var(--desk-outline), -1px 1px 0 var(--desk-outline);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desk-icon { transition: none; }
+}

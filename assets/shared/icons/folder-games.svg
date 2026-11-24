@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <!-- Pixel folder icon with a gamepad (Video Games) -->
+  <path fill="#2B1B4F" d="M1 3h5v1h1v1h8v9H1z"/>
+  <path fill="#C99A1E" d="M2 4h3v1h1v1h8v1H2z"/>
+  <path fill="#F7C948" d="M2 7h12v6H2z"/>
+  <path fill="#FFE08A" d="M2 7h12v1H2z"/>
+  <path fill="#2B1B4F" d="M4 8h8v1h1v3h-3v-1H6v1H3V9h1z"/>
+  <path fill="#6DE0F6" d="M5 9h1v3H5zM4 10h3v1H4z"/>
+  <path fill="#FF6FF2" d="M10 9h1v1h-1zM11 10h1v1h-1z"/>
+</svg>
