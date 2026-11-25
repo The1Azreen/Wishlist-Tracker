@@ -9,6 +9,7 @@ import {
 import { Store } from './store.js';
 import * as google from './google.js';
 import { createBackup } from './backup.js';
+import { SEED, markSeeded, pendingSeed } from './seed.js';
 
 const $ = (sel, el = document) => el.querySelector(sel);
 const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
@@ -639,6 +640,20 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
+// Adds the queued items in js/seed.js once the list has loaded properly (not from a stale cache,
+// where the save would fail; they're added next time the Sheet loads).
+async function addSeedItems() {
+  if (!['idle', 'saved'].includes(store.status)) return;
+  const pending = pendingSeed(new Set(store.items.map((i) => i.id)));
+  markSeeded(SEED.filter((s) => store.get(s.id))); // already on the list
+  if (!pending.length) return;
+  const ok = await attempt(() => store.addMany(pending.map((s) => newItem(s))));
+  if (ok) {
+    markSeeded(pending);
+    toast(`Added to your wishlist: ${pending.map((s) => s.name).join(', ')}`);
+  }
+}
+
 function syncControls() {
   $('#search').value = prefs.q;
   $('#f-status').value = prefs.status;
@@ -668,6 +683,7 @@ store.addEventListener('change', () => {
 });
 render();
 store.init().catch(() => {}).finally(async () => {
+  await addSeedItems();
   await backup.detect();
   backup.schedule();
 });

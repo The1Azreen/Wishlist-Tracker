@@ -23,7 +23,8 @@ It's plain HTML, CSS and JavaScript with no build step and no server. The theme 
 
 ## Features
 
-- **Categories:** Game, Figure, Blu-ray, CD, Vinyl, Book, Hardware, Other. Each one relabels the
+- **Types (categories):** Game, Figure, Blu-ray, CD, Vinyl, Music, Book, Hardware, Other, picked at the top
+  of the editor. Each one relabels the
   fields: Platform for games, Scale / Line for figures, Artist and Pressing for music, Author and
   Language for books, and so on. Each also suggests common values.
 - **Statuses:** Wanted → Hunting → Preordered → Ordered → Owned (or Dropped). **✓ Got it** marks an

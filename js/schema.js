@@ -61,6 +61,13 @@ export const CATEGORIES = {
     regions: ['JP', 'US', 'UK', 'EU', 'Original press', 'Repress'],
     editions: ['Standard black', 'Coloured', 'Splatter', 'Limited', 'Signed'],
   },
+  // Any music that isn't specifically a CD or a record (cassettes, digital, or "any format").
+  Music: {
+    icon: 'cd', maker: 'Artist', format: 'Format', region: 'Pressing',
+    formats: ['Any format', 'CD', 'Vinyl', 'Cassette', 'Digital', 'MiniDisc', 'Box set', 'Soundtrack'],
+    regions: ['JP', 'US', 'UK', 'EU', 'KR', 'Asia'],
+    editions: ['Standard', 'Limited', 'Deluxe', 'Signed', 'Anniversary'],
+  },
   Book: {
     icon: 'book', maker: 'Author', format: 'Format', region: 'Language',
     formats: ['Manga', 'Light novel', 'Novel', 'Artbook', 'Guidebook', 'Hardcover', 'Paperback', 'Magazine', 'Doujinshi'],
@@ -107,6 +114,7 @@ const HUNT_BY_CATEGORY = {
   'Blu-ray': ['bluraycom', 'ebay', 'carousell'],
   CD: ['discogs', 'mandarake', 'ebay', 'carousell'],
   Vinyl: ['discogs', 'ebay', 'carousell'],
+  Music: ['discogs', 'mandarake', 'ebay', 'carousell'],
   Book: ['abebooks', 'mandarake', 'ebay', 'carousell'],
   Hardware: ['ebay', 'carousell', 'shopping'],
   Other: ['ebay', 'carousell', 'mandarake', 'shopping'],
@@ -114,7 +122,7 @@ const HUNT_BY_CATEGORY = {
 export function huntLinks(item) {
   // Game platforms and editions help a search; artist does for music; the rest is noise.
   const extra = item.category === 'Game' ? item.format
-    : (item.category === 'CD' || item.category === 'Vinyl') ? item.maker : '';
+    : ['CD', 'Vinyl', 'Music'].includes(item.category) ? item.maker : '';
   const term = [item.name, extra].filter(Boolean).join(' ').trim();
   return (HUNT_BY_CATEGORY[item.category] || HUNT_BY_CATEGORY.Other).map((k) => HUNT[k](term));
 }

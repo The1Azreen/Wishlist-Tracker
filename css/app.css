@@ -49,6 +49,7 @@ main#layout .middle { width: auto; flex: 1; min-width: 0; padding-bottom: 20px; 
 .title[data-ico="Blu-ray"]::before { background-image: url(../assets/icons/bluray.svg); }
 .title[data-ico="CD"]::before { background-image: url(../assets/icons/cd.svg); }
 .title[data-ico="Vinyl"]::before { background-image: url(../assets/icons/vinyl.svg); }
+.title[data-ico="Music"]::before { background-image: url(../assets/shared/icons/folder-music.svg); }
 .title[data-ico="Book"]::before { background-image: url(../assets/icons/book.svg); }
 .title[data-ico="Hardware"]::before { background-image: url(../assets/icons/hardware.svg); }
 .title[data-ico="Other"]::before { background-image: url(../assets/icons/other.svg); }
