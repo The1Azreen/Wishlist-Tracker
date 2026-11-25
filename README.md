@@ -27,6 +27,8 @@ It's plain HTML, CSS and JavaScript with no build step and no server. The theme 
   of the editor. Each one relabels the
   fields: Platform for games, Scale / Line for figures, Artist and Pressing for music, Author and
   Language for books, and so on. Each also suggests common values.
+- **In print?** Mark items In print, Out of print (shown as an **OOP** chip) or Reprint. Filter by it,
+  or group by it to see what is getting hard to find.
 - **Statuses:** Wanted → Hunting → Preordered → Ordered → Owned (or Dropped). **✓ Got it** marks an
   item owned and records today's date.
 - **Timeline:** items grouped by release year. You can also group by category, series, status or

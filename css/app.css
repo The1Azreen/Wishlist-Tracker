@@ -168,6 +168,8 @@ a.button { display: inline-block; text-decoration: none; }
   white-space: nowrap;
 }
 .chip.status { color: var(--st); }
+.chip.avail { color: var(--lilith-username-color); }
+.chip.avail.oop { color: var(--st-hunting, #FF6F91); }
 .chip.fmt { color: var(--fmt, var(--lilith-inner-color)); }
 .prio { color: var(--lilith-border-color); letter-spacing: -1px; font-size: 13px; }
 .prio .off { color: #3C2E7B; }

@@ -84,12 +84,18 @@
                   <option>High</option><option>Medium</option><option>Low</option>
                 </select>
               </label>
+              <label>In print?
+                <select id="f-availability">
+                  <option value="">Any</option>
+                </select>
+              </label>
               <label>Group by
                 <select id="group">
                   <option value="year">Release year</option>
                   <option value="category">Category</option>
                   <option value="series">Series</option>
                   <option value="status">Status</option>
+                  <option value="availability">In print / OOP</option>
                   <option value="format">Platform / format</option>
                   <option value="none">Nothing</option>
                 </select>
@@ -140,6 +146,9 @@
           <select name="priority">
             <option>High</option><option selected>Medium</option><option>Low</option>
           </select>
+        </label>
+        <label>In print?
+          <select name="availability" id="availability-select"><option value="">Not sure</option></select>
         </label>
         <label>Condition wanted
           <select name="condition" id="condition-select"><option value="">-</option></select>

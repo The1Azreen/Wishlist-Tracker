@@ -3,7 +3,7 @@
 // you can reorder columns or add your own in the Sheet; the app keeps whatever it doesn't know.
 
 export const COLUMNS = [
-  'id', 'name', 'category', 'series', 'maker', 'format', 'edition', 'region', 'release_year',
+  'id', 'name', 'category', 'series', 'maker', 'format', 'edition', 'region', 'availability', 'release_year',
   'status', 'priority', 'condition', 'target_price', 'paid_price', 'currency',
   'where', 'link', 'image', 'notes', 'added', 'acquired', 'updated',
 ];
@@ -23,6 +23,13 @@ export const OPEN_STATUSES = new Set(['Wanted', 'Hunting', 'Preordered', 'Ordere
 
 export const PRIORITIES = ['High', 'Medium', 'Low'];
 export const PRIORITY_RANK = { High: 0, Medium: 1, Low: 2, '': 3 };
+
+// Whether it can still be bought new. `short` is the chip shown on cards.
+export const AVAILABILITY = [
+  { id: 'In print',     short: 'In print', hint: 'Still made and sold new' },
+  { id: 'Out of print', short: 'OOP',      hint: 'No longer made: second-hand or old stock only' },
+  { id: 'Reprint',      short: 'Reprint',  hint: 'Was out of print, now reissued' },
+];
 
 export const CONDITIONS = ['Sealed / New', 'Complete (used)', 'Loose / Disc only', 'Any'];
 
@@ -142,7 +149,7 @@ export function newItem(fields = {}) {
   const today = new Date().toISOString().slice(0, 10);
   return {
     id: newId(), name: '', category: 'Game', series: '', maker: '', format: '', edition: '', region: '',
-    release_year: '', status: 'Wanted', priority: 'Medium', condition: '', target_price: '', paid_price: '',
+    availability: '', release_year: '', status: 'Wanted', priority: 'Medium', condition: '', target_price: '', paid_price: '',
     currency: '', where: '', link: '', image: '', notes: '', added: today, acquired: '',
     updated: new Date().toISOString(),
     ...fields,

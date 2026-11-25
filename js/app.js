@@ -3,7 +3,7 @@
 
 import { CONFIG } from './config.js';
 import {
-  CATEGORIES, CATEGORY_NAMES, COLUMNS, CONDITIONS, OPEN_STATUSES, PRIORITIES, PRIORITY_RANK, STATUSES,
+  AVAILABILITY, CATEGORIES, CATEGORY_NAMES, COLUMNS, CONDITIONS, OPEN_STATUSES, PRIORITIES, PRIORITY_RANK, STATUSES,
   categoryOf, huntLinks, newItem, normalize, platformColor, safeUrl,
 } from './schema.js';
 import { Store } from './store.js';
@@ -22,7 +22,7 @@ const statusClass = (s) => `st-${String(s || 'Wanted').toLowerCase()}`;
 // ---- Preferences (filters, view) remembered in this browser ----
 const PREFS_KEY = 'wishlist.prefs';
 const prefs = {
-  category: 'All', status: 'open', priority: '', group: 'year', sort: 'priority', view: 'cards', q: '',
+  category: 'All', status: 'open', priority: '', availability: '', group: 'year', sort: 'priority', view: 'cards', q: '',
   currency: CONFIG.defaultCurrency,
   ...safeParse(localStorage.getItem(PREFS_KEY)),
 };
@@ -42,7 +42,7 @@ const backup = createBackup({ getItems: () => store.items, toCsv: (items) => 'ï»
 function matchesSearch(item, q) {
   if (!q) return true;
   const hay = [item.name, item.series, item.maker, item.format, item.edition, item.region, item.notes,
-    item.where, item.category, item.status, item.release_year].join(' ').toLowerCase();
+    item.where, item.category, item.status, item.availability, availShort(item), item.release_year].join(' ').toLowerCase();
   return q.toLowerCase().split(/\s+/).every((w) => hay.includes(w));
 }
 
@@ -55,6 +55,7 @@ function visibleItems() {
     (prefs.category === 'All' || it.category === prefs.category)
     && passesStatus(it)
     && (!prefs.priority || it.priority === prefs.priority)
+    && (!prefs.availability || it.availability === prefs.availability)
     && matchesSearch(it, prefs.q));
 }
 
@@ -80,6 +81,8 @@ const GROUPS = {
     order: (a, b) => STATUSES.findIndex((s) => s.id === a) - STATUSES.findIndex((s) => s.id === b) },
   format: { key: (i) => i.format || NONE, label: (k) => (k === NONE ? 'No platform / format' : k),
     order: (a, b) => (a === NONE) - (b === NONE) || a.localeCompare(b) },
+  availability: { key: (i) => i.availability || NONE, label: (k) => (k === NONE ? 'Not sure if in print' : k),
+    order: (a, b) => (a === NONE) - (b === NONE) || AVAILABILITY.findIndex((x) => x.id === a) - AVAILABILITY.findIndex((x) => x.id === b) },
   none: { key: () => 'all', label: () => 'All items', order: () => 0 },
 };
 
@@ -165,6 +168,13 @@ function fmtChip(item) {
   return `<span class="chip fmt"${c ? ` style="--fmt:${c}"` : ''}>${esc(item.format)}</span>`;
 }
 
+function availShort(item) { return AVAILABILITY.find((a) => a.id === item.availability)?.short || ''; }
+function availChip(item) {
+  const a = AVAILABILITY.find((x) => x.id === item.availability);
+  if (!a) return '';
+  return `<span class="chip avail${a.short === 'OOP' ? ' oop' : ''}" title="${esc(a.hint)}">${esc(a.short)}</span>`;
+}
+
 function priceHtml(item) {
   if (item.status === 'Owned' && item.paid_price !== '') return `<span class="paid" title="Paid">${esc(money(item.paid_price, item.currency))}</span>`;
   if (item.target_price !== '') return `<span title="Target price">${esc(money(item.target_price, item.currency))}</span>`;
@@ -197,6 +207,7 @@ function cardHtml(item) {
       <div class="row">
         <span class="chip status" title="${esc(STATUSES.find((s) => s.id === item.status)?.hint || '')}">${esc(item.status)}</span>
         ${fmtChip(item)}
+        ${availChip(item)}
         ${stars(item.priority)}
         <span class="price">${priceHtml(item)}</span>
       </div>
@@ -216,7 +227,7 @@ function listHtml(list) {
       <tr class="${statusClass(item.status)}" data-id="${esc(item.id)}">
         <td class="name"><img class="ico" src="${icon(item.category)}" alt="${esc(item.category)}"> ${esc(item.name)}
           ${item.maker || item.edition ? `<small>${[item.maker, item.edition].filter(Boolean).map(esc).join(' Â· ')}</small>` : ''}</td>
-        <td>${fmtChip(item)}</td>
+        <td>${fmtChip(item)} ${availChip(item)}</td>
         <td>${esc(item.release_year)}</td>
         <td><span class="chip status">${esc(item.status)}</span></td>
         <td>${stars(item.priority)}</td>
@@ -384,6 +395,8 @@ const form = $('#editor-form');
 let editing = null; // the item being edited, or null when adding
 
 $('#status-select').innerHTML = STATUSES.map((s) => `<option value="${s.id}" title="${esc(s.hint)}">${s.id}</option>`).join('');
+$('#availability-select').innerHTML += AVAILABILITY.map((a) => `<option value="${esc(a.id)}" title="${esc(a.hint)}">${esc(a.id)}</option>`).join('');
+$('#f-availability').innerHTML += AVAILABILITY.map((a) => `<option value="${esc(a.id)}">${esc(a.id)}</option>`).join('');
 $('#condition-select').innerHTML += CONDITIONS.map((c) => `<option>${esc(c)}</option>`).join('');
 $('#cat-pick').innerHTML += CATEGORY_NAMES.map((c) => `
   <label><input type="radio" name="category" value="${esc(c)}"><img src="${icon(c)}" alt="">${esc(c)}</label>`).join('');
@@ -555,7 +568,7 @@ const actions = {
   edit: (item) => item && openEditor(item),
   owned: (item) => item && markOwned(item),
   'clear-filters': () => {
-    Object.assign(prefs, { category: 'All', status: 'all', priority: '', q: '' });
+    Object.assign(prefs, { category: 'All', status: 'all', priority: '', availability: '', q: '' });
     syncControls(); savePrefs(); render();
   },
   connect: () => attempt(() => store.connect(async (localN, remoteN) => confirm(
@@ -613,7 +626,7 @@ $('#groups').addEventListener('error', (e) => {
 
 $('#add-btn').addEventListener('click', () => openEditor());
 $('#search').addEventListener('input', (e) => { prefs.q = e.target.value.trim(); renderTabs(); renderGroups(); });
-for (const [id, key] of [['f-status', 'status'], ['f-priority', 'priority'], ['group', 'group'], ['sort', 'sort']]) {
+for (const [id, key] of [['f-status', 'status'], ['f-priority', 'priority'], ['f-availability', 'availability'], ['group', 'group'], ['sort', 'sort']]) {
   $(`#${id}`).addEventListener('change', (e) => { prefs[key] = e.target.value; savePrefs(); render(); });
 }
 $('#import-file').addEventListener('change', (e) => {
@@ -658,6 +671,7 @@ function syncControls() {
   $('#search').value = prefs.q;
   $('#f-status').value = prefs.status;
   $('#f-priority').value = prefs.priority;
+  $('#f-availability').value = prefs.availability;
   $('#group').value = prefs.group;
   $('#sort').value = prefs.sort;
   for (const b of $$('[data-view]')) b.setAttribute('aria-pressed', String(b.dataset.view === prefs.view));

@@ -8,6 +8,7 @@ export const SEED = [
   { id: 'seed-astebreed-ps4', name: 'Astebreed', category: 'Game', format: 'PS4', status: 'Wanted', priority: 'Medium' },
   { id: 'seed-othercide-ps4', name: 'Othercide', category: 'Game', format: 'PS4', maker: 'Focus Home Interactive',
     release_year: 2020, status: 'Wanted', priority: 'Medium' },
+  { id: 'seed-pawarumi-switch', name: 'Pawarumi', category: 'Game', format: 'Switch', status: 'Wanted', priority: 'Medium' },
 ];
 
 // Returns the seed items still to add, given the ids already on the list.
