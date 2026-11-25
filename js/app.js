@@ -3,13 +3,13 @@
 
 import { CONFIG } from './config.js';
 import {
-  AVAILABILITY, CATEGORIES, CATEGORY_NAMES, COLUMNS, CONDITIONS, OPEN_STATUSES, PRIORITIES, PRIORITY_RANK, STATUSES,
+  AVAILABILITY, CATEGORIES, CATEGORY_NAMES, PHYSICAL_PUBLISHERS, COLUMNS, CONDITIONS, OPEN_STATUSES, PRIORITIES, PRIORITY_RANK, STATUSES,
   categoryOf, huntLinks, newItem, normalize, platformColor, safeUrl,
 } from './schema.js';
 import { Store } from './store.js';
 import * as google from './google.js';
 import { createBackup } from './backup.js';
-import { SEED, markSeeded, pendingSeed } from './seed.js';
+import { markSeeded, seedPlan } from './seed.js';
 
 const $ = (sel, el = document) => el.querySelector(sel);
 const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
@@ -41,7 +41,7 @@ const backup = createBackup({ getItems: () => store.items, toCsv: (items) => '�
 
 function matchesSearch(item, q) {
   if (!q) return true;
-  const hay = [item.name, item.series, item.maker, item.format, item.edition, item.region, item.notes,
+  const hay = [item.name, item.series, item.maker, item.physical_publisher, item.format, item.edition, item.region, item.notes,
     item.where, item.category, item.status, item.availability, availShort(item), item.release_year].join(' ').toLowerCase();
   return q.toLowerCase().split(/\s+/).every((w) => hay.includes(w));
 }
@@ -203,6 +203,7 @@ function cardHtml(item) {
       <h3>${esc(item.name || '(untitled)')}</h3>
       ${sub ? `<div class="sub">${sub}</div>` : ''}
       ${sub2 ? `<div class="sub2">${sub2}</div>` : ''}
+      ${item.physical_publisher ? `<div class="sub2" title="Physical release by">💿 ${esc(item.physical_publisher)}</div>` : ''}
       ${item.where ? `<div class="sub2" title="Where to find it">📍 ${esc(item.where)}</div>` : ''}
       <div class="row">
         <span class="chip status" title="${esc(STATUSES.find((s) => s.id === item.status)?.hint || '')}">${esc(item.status)}</span>
@@ -226,7 +227,8 @@ function listHtml(list) {
     <tbody>${list.map((item) => `
       <tr class="${statusClass(item.status)}" data-id="${esc(item.id)}">
         <td class="name"><img class="ico" src="${icon(item.category)}" alt="${esc(item.category)}"> ${esc(item.name)}
-          ${item.maker || item.edition ? `<small>${[item.maker, item.edition].filter(Boolean).map(esc).join(' · ')}</small>` : ''}</td>
+          ${item.maker || item.edition ? `<small>${[item.maker, item.edition].filter(Boolean).map(esc).join(' · ')}</small>` : ''}
+          ${item.physical_publisher ? `<small title="Physical release by">💿 ${esc(item.physical_publisher)}</small>` : ''}</td>
         <td>${fmtChip(item)} ${availChip(item)}</td>
         <td>${esc(item.release_year)}</td>
         <td><span class="chip status">${esc(item.status)}</span></td>
@@ -441,6 +443,9 @@ function openEditor(item = null, defaults = {}) {
     else el.value = data[el.name] ?? '';
   }
   fillDatalist('dl-series', store.items.map((i) => i.series).sort());
+  // Suggest each name already used on its own, as well as the common ones.
+  const usedPhysical = store.items.flatMap((i) => (i.physical_publisher || '').split(',').map((s) => s.trim()));
+  fillDatalist('dl-physical', [...usedPhysical.sort(), ...PHYSICAL_PUBLISHERS]);
   applyCategory(form.elements.category.value);
   updatePreview();
   dialog.showModal();
@@ -657,14 +662,15 @@ document.addEventListener('visibilitychange', () => {
 // where the save would fail; they're added next time the Sheet loads).
 async function addSeedItems() {
   if (!['idle', 'saved'].includes(store.status)) return;
-  const pending = pendingSeed(new Set(store.items.map((i) => i.id)));
-  markSeeded(SEED.filter((s) => store.get(s.id))); // already on the list
-  if (!pending.length) return;
-  const ok = await attempt(() => store.addMany(pending.map((s) => newItem(s))));
-  if (ok) {
-    markSeeded(pending);
-    toast(`Added to your wishlist: ${pending.map((s) => s.name).join(', ')}`);
-  }
+  const { add, fill, all } = seedPlan(store.items);
+  const ok = await attempt(async () => {
+    if (add.length) await store.addMany(add.map((s) => newItem(s)));
+    for (const item of fill) await store.save(item);
+  });
+  if (!ok) return;
+  markSeeded(all);
+  if (add.length) toast(`Added to your wishlist: ${add.map((s) => s.name).join(', ')}`);
+  if (fill.length) toast(`Filled in details for: ${fill.map((s) => s.name).join(', ')}`);
 }
 
 function syncControls() {

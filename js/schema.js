@@ -3,7 +3,7 @@
 // you can reorder columns or add your own in the Sheet; the app keeps whatever it doesn't know.
 
 export const COLUMNS = [
-  'id', 'name', 'category', 'series', 'maker', 'format', 'edition', 'region', 'availability', 'release_year',
+  'id', 'name', 'category', 'series', 'maker', 'physical_publisher', 'format', 'edition', 'region', 'availability', 'release_year',
   'status', 'priority', 'condition', 'target_price', 'paid_price', 'currency',
   'where', 'link', 'image', 'notes', 'added', 'acquired', 'updated',
 ];
@@ -94,6 +94,14 @@ export const CATEGORIES = {
     editions: ['Standard', 'Limited', 'Event exclusive'],
   },
 };
+// Companies that put games (and some films) out on disc or cartridge, often in small runs.
+// Suggestions only. An item can list several, separated by commas.
+export const PHYSICAL_PUBLISHERS = ['Limited Run Games', 'Strictly Limited Games', 'Red Art Games',
+  'Super Rare Games', 'eastasiasoft', 'Play-Asia', 'PixelHeart', 'iam8bit', 'Special Reserve Games',
+  'Fangamer', 'Premium Edition Games', 'Clear River Games', 'Mighty Rabbit Studios', 'Signature Edition Games',
+  'First Press Games', 'Hard Copy Games', 'Funstock', "Pix'n Love", 'Numskull Games', 'Merge Games',
+  'PQube', 'Clouded Leopard Entertainment'];
+
 export const CATEGORY_NAMES = Object.keys(CATEGORIES);
 
 export function categoryOf(item) {
@@ -148,7 +156,7 @@ export function platformColor(format) {
 export function newItem(fields = {}) {
   const today = new Date().toISOString().slice(0, 10);
   return {
-    id: newId(), name: '', category: 'Game', series: '', maker: '', format: '', edition: '', region: '',
+    id: newId(), name: '', category: 'Game', series: '', maker: '', physical_publisher: '', format: '', edition: '', region: '',
     availability: '', release_year: '', status: 'Wanted', priority: 'Medium', condition: '', target_price: '', paid_price: '',
     currency: '', where: '', link: '', image: '', notes: '', added: today, acquired: '',
     updated: new Date().toISOString(),

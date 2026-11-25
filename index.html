@@ -134,6 +134,8 @@
         <label class="wide">Name <input name="name" required placeholder="e.g. Persona 3 FES"></label>
         <label>Series / franchise <input name="series" list="dl-series" placeholder="e.g. Persona"></label>
         <label><span data-label="maker">Publisher</span> <input name="maker" list="dl-maker"></label>
+        <label class="wide" title="Who released it on disc / cartridge. Several? Separate them with commas.">Physical release by
+          <input name="physical_publisher" list="dl-physical" placeholder="e.g. Limited Run Games, Red Art Games"></label>
         <label><span data-label="format">Platform</span> <input name="format" list="dl-format"></label>
         <label>Edition / variant <input name="edition" list="dl-edition"></label>
         <label data-field="region"><span data-label="region">Region</span> <input name="region" list="dl-region"></label>
@@ -179,6 +181,7 @@
   <datalist id="dl-series"></datalist>
   <datalist id="dl-maker"></datalist>
   <datalist id="dl-format"></datalist>
+  <datalist id="dl-physical"></datalist>
   <datalist id="dl-edition"></datalist>
   <datalist id="dl-region"></datalist>
   <datalist id="dl-currency"><option>SGD</option><option>MYR</option><option>JPY</option><option>USD</option><option>EUR</option><option>GBP</option><option>HKD</option><option>KRW</option></datalist>
